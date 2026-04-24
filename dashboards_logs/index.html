@@ -5,40 +5,87 @@
   <title>Portal de Logs</title>
   <style>
     body {
-      font-family: 'Geist Variable', sans-serif;
-      background-color: #D1CCBD; /* Fondo beige */
-      color: #001B71; /* Texto azul profundo */
-      text-align: center;
       margin: 0;
-      padding: 50px;
-    }
-    h1 {
+      font-family: 'Geist Variable', sans-serif;
+      background-color: #D1CCBD;
       color: #001B71;
     }
-    p {
-      color: #2B5597;
+    /* Barra de navegación */
+    nav {
+      background-color: #001B71; /* Azul profundo */
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-    a {
+    nav .logo {
+      color: #FFFFFF;
+      font-size: 22px;
+      font-weight: bold;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      margin: 0;
+      padding: 0;
+    }
+    nav ul li {
+      margin-left: 20px;
+    }
+    nav ul li a {
+      text-decoration: none;
+      color: #FFFFFF;
+      font-weight: bold;
+      transition: color 0.3s ease, background-color 0.3s ease;
+      padding: 8px 12px;
+      border-radius: 6px;
+    }
+    nav ul li a:hover {
+      background-color: #2B5597; /* Azul medio */
+      color: #D1CCBD; /* Beige contraste */
+    }
+    /* Contenido principal */
+    .content {
+      text-align: center;
+      padding: 50px;
+    }
+    .content h1 {
+      margin-bottom: 20px;
+    }
+    .content a {
       display: inline-block;
       margin: 10px;
       padding: 12px 24px;
-      background-color: #2B5597; /* Botón azul medio */
+      background-color: #2B5597;
       color: #FFFFFF;
       text-decoration: none;
       border-radius: 8px;
       font-weight: bold;
       transition: background-color 0.3s ease;
     }
-    a:hover {
-      background-color: #62CBC9; /* Hover con acento */
+    .content a:hover {
+      background-color: #62CBC9;
       color: #001B71;
     }
   </style>
 </head>
 <body>
-  <h1>Bienvenido al Portal de Logs</h1>
-  <p>Selecciona una opción:</p>
-  <a href="funcion_logs/index.html">Función Logs</a>
-  <a href="dashboards_logs/index.html">Dashboard Logs</a>
+  <!-- Barra de navegación -->
+  <nav>
+    <div class="logo">AgroAmerica</div>
+    <ul>
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="funcion_logs/index.html">Función Logs</a></li>
+      <li><a href="dashboards_logs/index.html">Dashboard Logs</a></li>
+    </ul>
+  </nav>
+
+  <!-- Contenido principal -->
+  <div class="content">
+    <h1>Bienvenido al Portal de Logs</h1>
+    <p>Selecciona una opción:</p>
+    <a href="funcion_logs/index.html">Función Logs</a>
+    <a href="dashboards_logs/index.html">Dashboard Logs</a>
+  </div>
 </body>
 </html>
