@@ -13,13 +13,20 @@
     /* Barra de navegación */
     nav {
       background-color: #001B71; /* Azul profundo */
-      padding: 10px 30px;
+      padding: 15px 30px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
     nav .logo img {
       height: 40px; /* Ajusta el tamaño del logo */
+    }
+    nav .title {
+      color: #FFFFFF;
+      font-size: 22px;
+      font-weight: bold;
+      text-align: center;
+      flex-grow: 1; /* Ocupa el espacio central */
     }
     nav ul {
       list-style: none;
@@ -68,12 +75,13 @@
   </style>
 </head>
 <body>
-  <!-- Barra de navegación con logo -->
+  <!-- Barra de navegación -->
   <nav>
     <div class="logo">
-      <img src="logo.png" alt="AgroAmerica Logo"></div>
+      <img src="logo.png" alt="AgroAmerica Logo">
+    </div>
+    <div class="title">Bienvenido al Portal de Logs</div>
     <ul>
-      <h1>Bienvenido al Portal de Logs</h1>
       <li><a href="index.html">Inicio</a></li>
       <li><a href="funcion_logs/index.html">Función Logs</a></li>
       <li><a href="dashboards_logs/index.html">Dashboard Logs</a></li>
