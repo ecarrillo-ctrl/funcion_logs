@@ -1,0 +1,40 @@
+name: Logs (Costo $0)
+
+on:
+  push:
+    branches:
+      - main  # Se dispara cada vez que haces 'git push' a la rama principal
+
+jobs:
+  deploy:
+    name: Deploy Cloud Function
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Descargar el código del repositorio de GitHub
+      - name: Checkout del código
+        uses: actions/checkout@v4
+
+      # 2. Autenticación en Google Cloud usando la llave JSON (GCP_SA_KEY)
+      - name: Autenticar en Google Cloud
+        id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+# 3. Despliegue de la Cloud Function
+- name: Desplegar Function a Cloud Functions
+  id: deploy
+  uses: google-github-actions/deploy-cloud-functions@v2
+  with:
+    name: gestion-cloudflare-api       # Nombre de la función en la consola de GCP
+    runtime: nodejs20                  # Entorno de ejecución
+    region: us-central1                # Región recomendada (suele ser la más barata)
+    entry_point: app                   # IMPORTANTE: Debe coincidir con 'exports.app' en tu index.js
+    memory_mb: 256                     # Configuración baja para evitar costos
+    max_instances: 3                   # Límite de instancias para no escalar costos
+    service_account: github-deployer@cloudflare-492616.iam.gserviceaccount.com
+
+    # Aquí inyectamos el Token de Cloudflare desde los Secrets de GitHub
+    # para que la función pueda leerlo con process.env.CF_TOKEN
+    env_vars: |
+      CF_TOKEN=${{ secrets.CF_API_TOKEN }}
