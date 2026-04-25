@@ -2,46 +2,99 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Eric de LogDs</title>
+  <title>Portal de Logs</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f9;
-      text-align: center;
       margin: 0;
-      padding: 50px;
+      font-family: 'Geist Variable', sans-serif;
+      background-color: #D1CCBD;
+      color: #001B71;
     }
-    h1 {
-      color: #333;
+    /* Barra de navegación */
+    nav {
+      background-color: #001B71; /* Azul profundo */
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-    p {
-      color: #555;
+    nav .logo img {
+      height: 45px; /* Ajusta el tamaño del logo */
     }
-    ul {
+    nav .title {
+      color: #FFFFFF;
+      font-size: 22px;
+      font-weight: bold;
+      text-align: center;
+      flex-grow: 1; /* Ocupa el espacio central */
+    }
+    nav ul {
       list-style: none;
+      display: flex;
+      margin: 0;
       padding: 0;
     }
-    li {
-      margin: 15px 0;
+    nav ul li {
+      margin-left: 20px;
     }
-    a {
+    nav ul li a {
       text-decoration: none;
-      color: #0366d6;
-      font-size: 20px;
+      color: #FFFFFF;
       font-weight: bold;
+      transition: color 0.3s ease, background-color 0.3s ease;
+      padding: 8px 12px;
+      border-radius: 6px;
     }
-    a:hover {
-      color: #0053a6;
-      text-decoration: underline;
+    nav ul li a:hover {
+      background-color: #2B5597; /* Azul medio */
+      color: #D1CCBD; /* Beige contraste */
+    }
+    /* Contenido principal */
+    .content {
+      text-align: center;
+      padding: 50px;
+    }
+    .content h1 {
+      margin-bottom: 20px;
+    }
+    .content a {
+      display: inline-block;
+      margin: 10px;
+      padding: 12px 24px;
+      background-color: #2B5597;
+      color: #FFFFFF;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+    .content a:hover {
+      background-color: #62CBC9;
+      color: #001B71;
     }
   </style>
 </head>
 <body>
-  <h1>Bienvenido al Portal de Logs</h1>
-  <p>Selecciona una opción para continuar:</p>
-  <ul>
-    <li><a href="funcion_logs/index.html">Función Logs</a></li>
-    <li><a href="dashboards_logs/index.html">Dashboard Logs</a></li>
-  </ul>
+  <!-- Barra de navegación -->
+  <nav>
+    <div class="logo">
+      <!-- Ruta exacta al logo dentro de dashboards_logs -->
+      <img src="dashboards_logs/Logo.png" alt="AgroAmerica Logo">
+    </div>
+    <div class="title">Bienvenido al Portal de Logs</div>
+    <ul>
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="funcion_logs/index.html">Función Logs</a></li>
+      <li><a href="dashboards_logs/index.html">Dashboard Logs</a></li>
+    </ul>
+  </nav>
+
+  <!-- Contenido principal -->
+  <div class="content">
+    <h1>Bienvenido al Portal de Logs</h1>
+    <p>Selecciona una opción:</p>
+    <a href="funcion_logs/index.html">Función Logs</a>
+    <a href="dashboards_logs/index.html">Dashboard Logs</a>
+  </div>
 </body>
 </html>
