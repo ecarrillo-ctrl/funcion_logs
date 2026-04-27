@@ -84,6 +84,131 @@
    <div class="title">Bienvenido al Portal de Logs</div>
   </nav>
 
+  </style>
+</head>
+<body>
+
+<!-- ══════ PANTALLA DE LOGIN ══════ -->
+<div id="login-screen" style="display:none;position:fixed;inset:0;z-index:9999;background:var(--navy);align-items:center;justify-content:center">
+  <canvas id="bgc-login" style="position:absolute;inset:0;z-index:0;pointer-events:none"></canvas>
+  <div style="position:relative;z-index:1;width:100%;max-width:420px;padding:20px">
+    <!-- Logo -->
+    <div style="text-align:center;margin-bottom:28px">
+      <!-- Logo AgroAmérica según manual de marca — versión blanca sobre azul -->
+      <svg viewBox="0 0 220 64" xmlns="http://www.w3.org/2000/svg" style="height:60px;margin-bottom:10px">
+        <polygon points="28,4 54,58 2,58" fill="#D1CCBD"/>
+        <path d="M7,55 Q28,43 49,55" stroke="#001B71" stroke-width="3.5" fill="none"/>
+        <circle cx="28" cy="28" r="6" fill="#001B71"/>
+        <text x="66" y="32" font-family="'Libre Baskerville',Georgia,serif" font-size="22" font-weight="400" fill="#ffffff" letter-spacing="0.5">AgroAmerica</text>
+      </svg>
+      <div style="font-size:9px;color:var(--teal);letter-spacing:3px;text-transform:uppercase">Identity Orchestration · Zero Trust</div>
+    </div>
+    <!-- Card de login -->
+    <div style="background:rgba(255,255,255,.97);border:1px solid rgba(209,204,189,.3);border-radius:14px;padding:28px 32px;box-shadow:0 30px 80px rgba(0,0,0,.5)">
+      <div style="font-size:17px;font-weight:700;color:var(--navy);margin-bottom:4px;font-family:'Libre Baskerville',Georgia,serif">Iniciar sesión</div>
+      <div style="font-size:10.5px;color:var(--gray50);margin-bottom:20px">Acceso al panel de administración</div>
+
+      <!-- Botón Google -->
+      <!-- Email siempre arriba -->
+      <div style="margin-bottom:12px">
+        <label style="font-size:9px;color:var(--gray50);font-weight:700;letter-spacing:.8px;text-transform:uppercase;display:block;margin-bottom:5px">Correo electrónico</label>
+        <input id="login-email" type="email" placeholder="correo@agroamerica.com"
+          style="width:100%;font-size:11px;background:#fff;border-color:rgba(0,27,113,.2);color:var(--navy)"
+          onkeydown="if(event.key==='Enter')document.getElementById('login-pass').focus()"/>
+      </div>
+
+      <!-- Botón Google -->
+      <button id="btn-login-google" onclick="loginWithProvider('google')"
+        style="width:100%;background:rgba(66,133,244,.15);border:1px solid rgba(66,133,244,.4);border-radius:9px;
+               padding:11px 16px;color:var(--white);font-size:11.5px;font-weight:600;cursor:pointer;
+               display:flex;align-items:center;justify-content:center;gap:10px;transition:all .2s;margin-bottom:8px;
+               font-family:var(--fs)"
+        onmouseover="this.style.background='rgba(66,133,244,.28)'"
+        onmouseout="this.style.background='rgba(66,133,244,.15)'">
+        <svg width="16" height="16" viewBox="0 0 18 18">
+          <path fill="#4285F4" d="M16.51 8H8.98v3h4.3c-.18 1-.74 1.48-1.6 2.04v2.01h2.6a7.8 7.8 0 0 0 2.38-5.88c0-.57-.05-.66-.15-1.18z"/>
+          <path fill="#34A853" d="M8.98 17c2.16 0 3.97-.72 5.3-1.94l-2.6-2a4.8 4.8 0 0 1-7.18-2.54H1.83v2.07A8 8 0 0 0 8.98 17z"/>
+          <path fill="#FBBC05" d="M4.5 10.52a4.8 4.8 0 0 1 0-3.04V5.41H1.83a8 8 0 0 0 0 7.18z"/>
+          <path fill="#EA4335" d="M8.98 4.18c1.17 0 2.23.4 3.06 1.2l2.3-2.3A8 8 0 0 0 1.83 5.4L4.5 7.49a4.77 4.77 0 0 1 4.48-3.3z"/>
+        </svg>
+        Ingresar con Google
+      </button>
+
+      <!-- Separador -->
+      <div style="display:flex;align-items:center;gap:10px;margin:10px 0">
+        <div style="flex:1;height:1px;background:rgba(255,255,255,.1)"></div>
+        <span style="font-size:9px;color:rgba(255,255,255,.3)">o con contraseña local</span>
+        <div style="flex:1;height:1px;background:rgba(255,255,255,.1)"></div>
+      </div>
+
+      <input id="login-pass" type="password" placeholder="Contraseña (solo cuentas locales)"
+        style="width:100%;margin-bottom:12px;font-size:11px;background:#fff;border-color:rgba(0,27,113,.2);color:var(--navy)"
+        onkeydown="if(event.key==='Enter')loginLocal()"/>
+      <button onclick="loginLocal()"
+        style="width:100%;background:var(--green);border:none;border-radius:9px;padding:12px;
+               color:var(--navy);font-size:12px;font-weight:700;cursor:pointer;font-family:var(--fs);
+               transition:all .2s"
+        onmouseover="this.style.opacity='.9'" onmouseout="this.style.opacity='1'">
+        Iniciar sesión →
+      </button>
+
+      <div id="login-err" style="display:none;margin-top:12px;padding:9px 12px;background:rgba(255,89,90,.08);
+           border:1px solid rgba(255,89,90,.3);border-radius:7px;font-size:10px;color:#c0392b;font-weight:500"></div>
+
+      <!-- Botón CF Access — solo aparece si el ambiente está detrás de CF Access -->
+      <div style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(0,27,113,.12)">
+        <button onclick="loginWithCFAccess()"
+          style="width:100%;background:rgba(243,130,33,.12);border:1px solid rgba(243,130,33,.35);border-radius:9px;
+                 padding:10px 16px;color:var(--navy);font-size:11px;font-weight:600;cursor:pointer;
+                 display:flex;align-items:center;justify-content:center;gap:8px;transition:all .2s"
+          onmouseover="this.style.background='rgba(243,130,33,.22)'"
+          onmouseout="this.style.background='rgba(243,130,33,.12)'">
+          ☁️ Login con Cloudflare Access
+        </button>
+        <div style="font-size:8px;color:rgba(0,27,113,.4);text-align:center;margin-top:6px">Solo si accedes desde red corporativa con CF Access configurado</div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:14px;font-size:8.5px;color:rgba(209,204,189,.4)">
+      AgroAmérica Access Intelligence v3.0 · Zero Trust Panel
+    </div>
+  </div>
+</div>
+
+<canvas id="bgc"></canvas>
+<div id="app">
+
+<header>
+  <div class="hbrand">
+    <svg class="hlogo" viewBox="0 0 200 54" xmlns="http://www.w3.org/2000/svg">
+      <!-- Triángulo khaki oficial -->
+      <polygon points="22,4 43,46 1,46" fill="#D1CCBD"/>
+      <!-- Arco negro (path raíz) -->
+      <path d="M5,44 Q22,35 39,44" stroke="#001B71" stroke-width="3" fill="none"/>
+      <!-- Círculo persona/semilla -->
+      <circle cx="22" cy="23" r="4.5" fill="#001B71"/>
+      <!-- AgroAmerica en Baskerville -->
+      <text x="52" y="22" font-family="'Libre Baskerville',Georgia,serif" font-size="13" font-weight="400" fill="#D1CCBD" letter-spacing="0.5">Agro</text><text x="52" y="38" font-family="'Libre Baskerville',Georgia,serif" font-size="13" font-weight="400" fill="#D1CCBD" letter-spacing="0.5">America</text>
+    </svg>
+    <div><div class="hsub" style="color:var(--khaki);opacity:.7">Identity Orchestration · Zero Trust</div></div>
+  </div>
+  <div class="hright">
+    <button id="theme-toggle" onclick="toggleTheme()" title="Modo claro/oscuro" style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:var(--white);width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0">🌙</button>
+    <span class="hclock" id="hclock"></span>
+    <div class="hst"><span class="dot dot-off" id="dot-cf"></span>Cloudflare</div>
+    <div class="hst"><span class="dot dot-off" id="dot-ig"></span>Service Desk</div>
+    <div class="hst"><span class="dot dot-off" id="dot-ai"></span>IA</div>
+    <div class="hst" id="dot-uptime-wrap"><span class="dot dot-off" id="dot-uptime"></span>Uptime</div>
+    <span class="bdg cg" id="bdg-dev" style="display:none">💻 —</span>
+    <span class="bdg cb" id="bdg-usr" style="display:none">👥 —</span>
+    <div style="display:flex;align-items:center;gap:4px">
+      <div id="hdr-session" style="display:flex;align-items:center;gap:5px;padding:3px 9px;border-radius:20px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);cursor:pointer" onclick="goTab('usuarios')" title="Gestión de usuarios">
+        <span id="hdr-role-badge" style="font-size:7px;font-weight:800;padding:1px 5px;border-radius:4px;background:var(--teal);color:var(--navy)">ADMIN</span>
+        <span id="hdr-session-email" style="color:rgba(255,255,255,.5);font-size:7.5px;font-weight:600">admin</span>
+      </div>
+      <button onclick="logoutUser()" title="Cerrar sesión" style="background:rgba(255,89,90,.12);border:1px solid rgba(255,89,90,.25);color:rgba(255,89,90,.8);width:24px;height:24px;border-radius:50%;cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0" onmouseover="this.style.background='rgba(255,89,90,.25)'" onmouseout="this.style.background='rgba(255,89,90,.12)'">⏻</button>
+    </div>
+  </div>
+</header>
   
 </body>
 </html>
