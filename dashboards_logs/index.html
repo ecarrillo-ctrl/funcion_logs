@@ -2,54 +2,95 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Visor de Logs Fortinet</title>
+  <title>Portal de Logs</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f9;
       margin: 0;
-      padding: 20px;
+      font-family: 'Geist Variable', sans-serif;
+      background-color: #D1CCBD;
+      color: #001B71;
     }
-    h1 {
+    /* Barra de navegación */
+    nav {
+      background-color: #001B71; /* Azul profundo */
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    nav .logo img {
+      height: 45px; /* Ajusta el tamaño del logo */
+    }
+    nav .title {
+      color: #FFFFFF;
+      font-size: 22px;
+      font-weight: bold;
       text-align: center;
-      color: #333;
+      flex-grow: 1; /* Ocupa el espacio central */
     }
-    #logInput {
-      margin: 20px 0;
-      display: block;
+    nav ul {
+      list-style: none;
+      display: flex;
+      margin: 0;
+      padding: 0;
     }
-    #logOutput {
-      white-space: pre-wrap;
-      background: #222;
-      color: #0f0;
-      padding: 15px;
-      border-radius: 5px;
-      height: 400px;
-      overflow-y: scroll;
+    nav ul li {
+      margin-left: 20px;
+    }
+    nav ul li a {
+      text-decoration: none;
+      color: #FFFFFF;
+      font-weight: bold;
+      transition: color 0.3s ease, background-color 0.3s ease;
+      padding: 8px 12px;
+      border-radius: 6px;
+    }
+    nav ul li a:hover {
+      background-color: #2B5597; /* Azul medio */
+      color: #D1CCBD; /* Beige contraste */
+    }
+    /* Contenido principal */
+    .content {
+      text-align: center;
+      padding: 50px;
+    }
+    .content h1 {
+      margin-bottom: 20px;
+    }
+    .content a {
+      display: inline-block;
+      margin: 10px;
+      padding: 12px 24px;
+      background-color: #2B5597;
+      color: #FFFFFF;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+    .content a:hover {
+      background-color: #62CBC9;
+      color: #001B71;
     }
   </style>
 </head>
 <body>
-  <h1>Visor de Logs Fortinet</h1>
-  
-  <input type="file" id="logInput" accept=".log,.txt">
-  
-  <div id="logOutput">Selecciona un archivo de logs...</div>
-  
-  <script>
-    const input = document.getElementById('logInput');
-    const output = document.getElementById('logOutput');
+  <!-- Barra de navegación -->
+  <nav>
+    <div class="logo">
+      <!-- Ruta exacta al logo dentro de dashboards_logs -->
+      <img src="dashboards_logs/Logo.png" alt="AgroAmerica Logo">
+    </div>
+    <div class="title">Bienvenido al Portal de Logs</div>
+   
+  </nav>
 
-    input.addEventListener('change', () => {
-      const file = input.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          output.textContent = e.target.result;
-        };
-        reader.readAsText(file);
-      }
-    });
-  </script>
+  <!-- Contenido principal -->
+  <div class="content">
+    <h1>Bienvenido al Portal de Logs</h1>
+    <p>Selecciona una opción:</p>
+    <a href="funcion_logs/index.html">Función Logs</a>
+    <a href="dashboards_logs/index.html">Dashboard Logs</a>
+  </div>
 </body>
 </html>
